@@ -59,7 +59,7 @@ export async function POST(req: NextRequest) {
             specs: a.specs.map(s => ({ name: s.name, description: s.description })),
         }));
 
-        const truncatedScript = scriptText.slice(0, 30000);
+        const truncatedScript = scriptText.slice(0, 800000);
         const client = getOpenAIClient();
         const model = getModel();
 
@@ -69,7 +69,7 @@ export async function POST(req: NextRequest) {
                 { role: 'system', content: SYSTEM_PROMPT },
                 {
                     role: 'user',
-                    content: `剧本概要（前30000字）：\n${truncatedScript}\n\n资产列表：\n${JSON.stringify(assetSummary, null, 2)}\n\n请生成美学风格描述和所有资产的所有规格提示词。`,
+                    content: `完整剧本内容：\n${truncatedScript}\n\n资产列表：\n${JSON.stringify(assetSummary, null, 2)}\n\n请生成美学风格描述和所有资产的所有规格提示词。`,
                 },
             ],
             temperature: 0.5,
