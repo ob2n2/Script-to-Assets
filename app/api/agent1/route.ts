@@ -49,7 +49,7 @@ export async function POST(req: NextRequest) {
             return NextResponse.json({ error: 'scriptText is required' }, { status: 400 });
         }
 
-        const truncated = scriptText.slice(0, 80000); // guard against huge scripts
+        const truncated = scriptText.slice(0, 200000); // guard against huge scripts
         const client = getOpenAIClient();
         const model = getModel();
 
@@ -60,7 +60,7 @@ export async function POST(req: NextRequest) {
                 { role: 'user', content: `以下是剧本内容，请进行资产梳理：\n\n${truncated}` },
             ],
             temperature: 0.3,
-            max_tokens: 8000,
+            max_tokens: 32768,
         });
 
         const raw = completion.choices[0]?.message?.content ?? '';

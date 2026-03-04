@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
                 },
             ],
             temperature: 0.5,
-            max_tokens: 16000,
+            max_tokens: 65536,
         });
 
         const raw = completion.choices[0]?.message?.content ?? '';
